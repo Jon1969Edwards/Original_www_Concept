@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Skydiving Experience</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.130.0/build/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.130.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.130.0/examples/js/controls/OrbitControls.js"></script>
+        
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="TemplateData/style.css">
+        <link rel="stylesheet" href="/TemplateData/footer.css">
+        <style>
+            body {
+                font-family: 'Orbitron', sans-serif; /* Adjusted to use Orbitron */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="earthImageContainer">
+                <div id="earth-image">
+                </div>
+            </div>              
+            <div id="overlay">
+                <div id="model-container"></div>
+                <!-- Optional overlay content -->
+                <canvas id="c"></canvas>
+            </div>
+        </div>
+
+        <div id="gauge-container" class="unity-desktop">
+            <canvas id="unity-canvas" width="100%" height="100%" tabindex="-1"></canvas>
+                <div id="unity-loading-bar"> 
+                    <div id="vwr-sky"></div>
+                    <div id="gauge-body">
+                        <div id="gauge-needle"></div>
+                    </div>
+                </div>
+            <div id="unity-warning"></div>
+        </div>
+
+        <script>
+
+        window.addEventListener("load", function () {
+            if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("ServiceWorker.js");
+            }
+        });
+            var container = document.querySelector("#unity-container");
+            var canvas = document.querySelector("#unity-canvas");
+            var loadingBar = document.querySelector("#unity-loading-bar");
+            var rotatingImage = document.querySelector("#gauge-needle"); // Define our gauge png //
+            var warningBanner = document.querySelector("#unity-warning");
+    
+            function unityShowBanner(msg, type) {
+            function updateBannerVisibility() {
+                warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+            }
+            var div = document.createElement('div');
+            div.innerHTML = msg;
+            warningBanner.appendChild(div);
+            if (type == 'error') div.style = 'background: red; padding: 10px;';
+            else {
+                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+                setTimeout(function() {
+                warningBanner.removeChild(div);
+                updateBannerVisibility();
+                }, 5000);
+            }
+            updateBannerVisibility();
+            }
+    
+            // var buildUrl = "Build";
+            // var loaderUrl = buildUrl + "/Popup_Texts.loader.js";
+            // var config = {
+            //     dataUrl: buildUrl + "/Popup_Texts.data.unityweb",
+            //     frameworkUrl: buildUrl + "/Popup_Texts.framework.js.unityweb",
+            //     codeUrl: buildUrl + "/Popup_Texts.wasm.unityweb",
+            //     streamingAssetsUrl: "StreamingAssets",
+            //     companyName: "VWR",
+            //     productName: "Main Site",
+            //     productVersion: "0.2",
+            //     showBanner: unityShowBanner,
+            // };
+
+            var buildUrl = "Build";
+            var loaderUrl = buildUrl + "/81ed1880f4c4ef2eb6487d4721eb1107.loader.js";
+            var config = {
+                dataUrl: buildUrl + "/fd98c0b90ec659fdaff494e0a99f39df.data.unityweb",
+                frameworkUrl: buildUrl + "/9f9e87eaceb21064b14ba5ece7f1937e.framework.js.unityweb",
+                codeUrl: buildUrl + "/1686ab74a8490df8e9265d4105f0fb3a.wasm.unityweb",
+                streamingAssetsUrl: "StreamingAssets",
+                companyName: "RomanDog",
+                productName: "VWR_Concept",
+                productVersion: "1.0.2",
+                showBanner: unityShowBanner,
+            };
+    
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            container.className = "unity-mobile";
+            canvas.className = "unity-mobile";
+            config.devicePixelRatio = 1;
+            } else {
+            canvas.style.width = "960px";
+            canvas.style.height = "600px";
+            }
+    
+            loadingBar.style.display = "block";
+    
+            var script = document.createElement("script");
+            script.src = loaderUrl;
+            script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+            
+                var rotation = Math.floor(-360 * progress); //-- Math for rotation here based on 'progress' --//
+            
+                rotatingImage.style.transform = `rotate(${rotation}deg)`; //-- Rotate our gauge png --//
+                
+                    }).then((unityInstance) => {
+                    loadingBar.style.display = "none"; <!-- This hides the above div-->
+                    }).catch((message) => {
+                    alert(message);
+                    });
+                };
+    
+            document.body.appendChild(script);
+    
+        </script>
+
+        <div class="container">
+            <!-- <div class="loader">
+                <img src="gauge/Gauge_v4_BODY.png" alt="altimeter body" class="altimeter-bg">
+                <div class="needle-container" id="needle-container">
+                    <img id="needle" src="gauge/Gauge_v4_NEEDLE.png" alt="needle" class="needle">
+                </div>
+                <div class="text-container" id="text-container">
+                    <div class="loading-text" id="loading-text">0%</div>
+                </div>
+            </div> -->
+
+            <div class="mobile-altimeter">
+                <div class="altimeter-header">LOADING</div>
+                
+                <div class="altitude-display-container">
+                    <div class="text-background"></div>
+                    <div class="altitude-display" id="altitude">0m</div>
+                    <div class="altitude-display" id="loading-percentage">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="fade-overlay" class="fade-to-black">
+            <div id="welcome-text" class="welcome-text">Welcome to VWR...</div>
+        </div>
+        
+        <div id="white-fade-overlay"></div>
+
+        <div class="hamburger" id="hamburger">&#9776;</div>
+
+        <footer id="footer">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <button class="link-style" id="togglePopupBtn" type="button">Navigation Help</button>
+                    <button class="link-style" type="button" onclick="openPrivacyModal()">Privacy Policy</button>
+                    <button class="link-style" type="button" onclick="openTermsModal()">Terms of Use</button>  
+                </div>
+
+                <div class="footer-copyright">
+                    <p class="text-style">© Virtual World Resources 2024</p>
+                </div>
+                <div class="footer-social">
+                    <span class="text-style">Share:</span>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com" target="_blank" aria-label="Share on Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url=https://example.com&text=Check%20this%20out!" target="_blank" aria-label="Share on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://example.com&amp;title=Interesting%20Article" target="_blank" aria-label="Share on LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/yourprofile" target="_blank" aria-label="Visit our Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://discord.com/invite/example" target="_blank" aria-label="Join us on Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="contact-icon" id="open-modal-btn" aria-label="Contact Us">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-button">
+                    <button id="fullscreen-btn">Go Fullscreen</button>
+                </div>
+            </div>
+        </footer>
+
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" id="close-modal-btn" aria-label="Close">&times;</span>
+                <h3>Contact Us</h3>
+                <form id="contactForm" action="mailto:shaun@vwr.dev" method="post" enctype="text/plain" onsubmit="handleSubmit(event)">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+                <div class="thank-you-message" id="thankYouMessage">Thank you for your message!</div>
+            </div>
+        </div>
+
+        <script type="module" src="src/script.js"></script>
+        <script type="module" src="src/footer.js"></script>
+    </body>
+</html>

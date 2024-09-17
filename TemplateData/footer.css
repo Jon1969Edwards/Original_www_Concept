@@ -1,0 +1,387 @@
+footer {
+    background-color: #1B2B1E;
+    position: fixed;
+    width: 100%;
+    /* border-top-left-radius: 15px;
+    border-top-right-radius: 15px; */
+    padding: 20px;
+    transition: transform 0.3s ease;
+    z-index: 19;
+    bottom: 0;
+    left: 0;
+    display: block;
+}
+/* footer, .footer-container, .footer-links, .footer-social {
+    pointer-events: auto;
+} */
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    z-index: 19;
+    position: relative;
+}
+.footer-links, .footer-copyright, .footer-social, .footer-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+}
+.footer-links {
+    flex-direction: row;
+    gap: 20px;
+}
+.footer-social {
+    gap: 20px;
+}
+.link-style {
+    font-size: 12px;
+    color: lightgray;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.link-style:hover {
+    color: #f29f05 !important;
+    text-decoration: underline;
+}
+
+.text-style {
+    font-size: 12px;
+    color: lightgray;
+    text-align: center;
+}
+.social-icons a {
+    text-decoration: none;
+    color: lightgray;
+    font-size: 18px;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+.social-icons a:hover {
+    color: #f29f05;
+}
+
+@media (min-width: 768px) {
+
+    .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .footer-links, .footer-social {
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+/* Fullscreen Button Styling */
+#fullscreen-btn {
+    font-size: 15px;
+    font-family: 'National Park', sans-serif;
+    cursor: pointer;
+    background: transparent;
+    color: #f29f05;
+    border: 2px solid #f29f05;
+    border-radius: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    line-height: 1;
+    margin: 0;
+    transition: backdrop-filter 0.3s, color 0.3s, border-color 0.3s;
+    backdrop-filter: blur(5px);
+}
+#fullscreen-btn:hover {
+    backdrop-filter: blur(7px);
+    color: #fff;
+    border-color: #fff;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%); /* Center the icon perfectly */ background-color: #1B2B1E;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        z-index: 19;
+    }
+    footer {
+        transform: translateY(100%);
+        width: 100%; /* Ensure footer takes up full width */
+        padding: 10px 0;
+        text-align: center; /* Center all footer content */
+        z-index: 18;
+    }
+    .footer-container {
+        flex-direction: column; /* Stack items vertically */
+        justify-content: center;
+        align-items: center;
+        text-align: center; /* Center all content inside the footer */
+        width: 100%; /* Full width for mobile */
+        z-index: 18;
+    }
+    footer.open {
+        transform: translateY(0);
+        bottom: 38px;
+    }
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        z-index: 18;
+    }
+    .footer-social {
+        flex-direction: column; /* Stack footer links and social icons vertically */
+        gap: 10px; /* Adjust gap for better spacing on mobile */
+        z-index: 18;
+    }
+    footer, .footer-container, .footer-links, .footer-social {
+        pointer-events: auto; /* Ensure the footer content can be clicked */
+    }
+    
+    /* Ensure modal doesn't interfere with footer clicks */
+    .modal {
+        pointer-events: auto;
+    }
+
+    #navigationMenu {
+        display: block;
+    }
+
+    /* Disable pointer events for overlapping elements */
+    #model-container, #earthImageContainer {
+        pointer-events: none; /* Prevent them from blocking the footer */
+    }
+
+    footer.open #model-container, footer.open #earthImageContainer {
+        pointer-events: auto; /* Re-enable when footer is closed */
+    }
+
+}
+
+/* Contact Icon Styling */
+.contact-icon {
+    text-decoration: none;
+    color: lightgray;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.contact-icon:hover {
+    color: #f29f05;
+}
+
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1003;
+}
+
+.modal-content {
+    background-color: #1B2B1E;
+    padding: 20px;
+    border: 4px solid #333;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+
+.modal.open .modal-content {
+    max-width: 400px;
+    max-height: 600px;
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #f29f05;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #D3D3D3;
+}
+
+.modal-content input, .modal-content textarea {
+    width: 90%;
+    padding: 8px;
+    margin: 0 auto 12px auto;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000;
+    display: block;
+    font-size: 14px;
+}
+
+.modal-content input[type="submit"] {
+    background-color: #f29f05;
+    color: #000000;
+    cursor: pointer;
+    font-weight: bold;
+    width: 60%;
+    margin-top: 8px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content input[type="submit"]:hover {
+    background-color: #333;
+    color: #f29f05;
+}
+
+.modal-close {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    line-height: 1;
+}
+
+.thank-you-message {
+    display: none;
+    color: #f29f05;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 1px 1px #fff;
+    font-family: "NationalPark Regular", sans-serif;
+}
+
+#navigationMenu {
+    display: none;
+}
+
+/* =============== Navigation Popup Styles =============== */
+/* Add the initial position off-screen to the right */
+.pop-up {
+    position: fixed;
+    width: 95%;
+    max-width: 300px;
+    background-color: rgba(27, 43, 30, 0.3);
+    bottom: 120px;
+    z-index: 17;
+    border-radius: 20px;
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+@media (min-width: 768px) {
+    .pop-up {
+        right: 40px;
+    }
+}
+
+.pop-up-inner {
+    padding: 5%;
+}
+
+.instructions img {
+    width: 50px;  /* Adjust this value as needed */
+    height: 50px;  /* Adjust this value as needed */
+    margin-left: 10%;
+}
+
+/* When the pop-up is opened, move it into view */
+.pop-up.open {
+    transform: translateX(-calc(100% - 40px)); /* Ensure the slide-in accounts for the new margin */
+    opacity: 1; /* Make it fully visible */
+}
+
+/* Optional: Hide the popup when closed */
+.pop-up.close-pop-up {
+    transform: translateX(0); /* Move it back to its original off-screen position */
+    opacity: 0; /* Hide it */
+}
+
+/* Keyframes for the sliding in effect, if you want to use keyframes instead of just transform */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); /* Start off-screen to the right */
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0); /* End in the normal position */
+        opacity: 1;
+    }
+}
+
+
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    .pop-up {
+        width: 95%;
+        padding: 5px;
+        display: block;
+        bottom: 50px;
+        color: white;
+    }
+
+    .pop-up-inner {
+        padding: 5px;
+    }
+
+    .pop-up-inner .instructions img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .pop-up-inner h2 {
+        font-size: 15px;
+    }
+
+    .pop-up-inner .instructions {
+        font-size: 15px;
+    }
+
+    button {
+        all: unset; /* Reset all styles */
+        display: inline-block; /* Ensure they behave like buttons */
+        cursor: pointer; /* Make sure they are still clickable */
+        color: white;
+        font-size: 20px;
+    }
+}
